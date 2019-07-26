@@ -10,11 +10,13 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.withClip
 import androidx.core.graphics.withSave
 import androidx.core.graphics.withTranslation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.abs
 import kotlin.math.round
 
 
@@ -50,8 +52,8 @@ class KaitekiSwipeCallback(
     ) {
         val itemView = viewHolder.itemView
         c.withSave {
-            swipeToStartItem?.draw(this, false, itemView, dX)
-            swipeToEndItem?.draw(this, true, itemView, dX)
+            swipeToStartItem?.draw(this, false, recyclerView, itemView, dX)
+            swipeToEndItem?.draw(this, true, recyclerView, itemView, dX)
         }
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
@@ -64,41 +66,58 @@ class KaitekiSwipeCallback(
     ) {
         protected val color = ContextCompat.getColor(context, colorRes)
         protected val icon =
-            ContextCompat.getDrawable(context, iconRes)!!.apply { setBounds(0, 0, intrinsicWidth, intrinsicHeight) }
+            ResourcesCompat.getDrawable(context.resources, iconRes, context.theme)!!.apply {
+                setBounds(
+                    0,
+                    0,
+                    intrinsicWidth,
+                    intrinsicHeight
+                )
+            }
 
-        fun draw(c: Canvas, drawLeft: Boolean, itemView: View, dX: Float) {
+        fun draw(c: Canvas, drawLeft: Boolean, recyclerView: RecyclerView, itemView: View, dX: Float) {
+            val itemWidth = itemView.right - itemView.left
             if (drawLeft) {
                 if (dX <= 0) {
                     return
                 }
-                c.withClip(itemView.left, itemView.top, itemView.left + dX.toInt(), itemView.bottom) {
-                    drawInternal(this, drawLeft, itemView, dX)
+                c.withClip(recyclerView.left, itemView.top, itemView.right - itemWidth / 2 + dX.toInt(), itemView.bottom) {
+                    drawInternal(this, drawLeft, recyclerView, itemView, dX)
                 }
             } else {
                 if (dX >= 0) {
                     return
                 }
-                c.withClip(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom) {
-                    drawInternal(this, drawLeft, itemView, dX)
+                c.withClip(itemView.left + itemWidth / 2 + dX.toInt(), itemView.top, recyclerView.right, itemView.bottom) {
+                    drawInternal(this, drawLeft, recyclerView, itemView, dX)
                 }
             }
         }
 
-        protected open fun drawInternal(c: Canvas, drawLeft: Boolean, itemView: View, dX: Float) {
+        protected open fun drawInternal(
+            c: Canvas,
+            drawLeft: Boolean,
+            recyclerView: RecyclerView,
+            itemView: View,
+            dX: Float
+        ) {
             val itemHeight = itemView.bottom - itemView.top
-            c.drawColor(color)
-            val iconMargin = round((itemHeight - icon.intrinsicHeight) / 2f)
+            val iconMargin = icon.intrinsicWidth.toFloat()
+
+            val alpha = (minOf(abs(dX) / iconMargin / 3f, 1f) * 255f).toInt()
+
+            c.drawColor((alpha shl 24) or (color and 0xFFFFFF))
             if (drawLeft) {
                 c.withTranslation(
                     itemView.left + iconMargin,
-                    itemView.top + iconMargin,
+                    itemView.top + (itemHeight - icon.intrinsicHeight) / 2f,
                     icon::draw
                 )
-                c.translate(itemView.left + iconMargin + icon.intrinsicWidth + iconMargin, 0f)
+                c.translate(itemView.left + iconMargin * 2 + icon.intrinsicWidth, 0f)
             } else {
                 c.withTranslation(
                     itemView.right - icon.intrinsicWidth - iconMargin,
-                    itemView.top + iconMargin,
+                    itemView.top + (itemHeight - icon.intrinsicHeight) / 2f,
                     icon::draw
                 )
                 c.translate(-(icon.intrinsicWidth + iconMargin * 2), 0f)
@@ -126,8 +145,8 @@ class KaitekiSwipeCallback(
 
         protected val textHeight by lazy { textPaint.fontMetrics.run { descent - ascent } }
 
-        override fun drawInternal(c: Canvas, drawLeft: Boolean, itemView: View, dX: Float) {
-            super.drawInternal(c, drawLeft, itemView, dX)
+        override fun drawInternal(c: Canvas, drawLeft: Boolean, recyclerView: RecyclerView, itemView: View, dX: Float) {
+            super.drawInternal(c, drawLeft, recyclerView, itemView, dX)
 
             textPaint.textAlign = if (drawLeft) Paint.Align.LEFT else Paint.Align.RIGHT
             val tY = itemView.top + round((itemView.height - textHeight) / 2f - textPaint.fontMetrics.ascent)
