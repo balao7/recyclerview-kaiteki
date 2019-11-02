@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.kroegerama.kaiteki.recyclerview.example.view.PullDismissLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pullDismiss"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff">
+
+        <LinearLayout
+            android:id="@+id/group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/dummyTop"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp"
+                android:background="#eae"
+                tools:text="@tools:sample/lorem" />
+
+            <View
+                android:id="@+id/dummyBottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</com.kroegerama.kaiteki.recyclerview.example.view.PullDismissLayout>
