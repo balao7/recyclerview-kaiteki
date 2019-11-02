@@ -7,14 +7,19 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 class StaggeredGridLayoutSpaceItemDecoration(
-        @Px private val spacing: Int
+    @Px private val spacing: Int
 ) : RecyclerView.ItemDecoration() {
 
     private val spacing_h = spacing / 2
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         val layoutManager = parent.layoutManager as? StaggeredGridLayoutManager
-                ?: throw IllegalStateException("only StaggeredGridLayoutManager supported")
+            ?: throw IllegalStateException("only StaggeredGridLayoutManager supported")
 
         val lp = view.layoutParams as StaggeredGridLayoutManager.LayoutParams
 

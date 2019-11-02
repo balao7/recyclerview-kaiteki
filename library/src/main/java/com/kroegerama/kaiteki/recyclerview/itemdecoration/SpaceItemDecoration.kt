@@ -31,14 +31,17 @@ class SpaceItemDecoration(@Px private val spacing: Int) : RecyclerView.ItemDecor
                 orientation = layoutManager.orientation
             } else {
                 throw IllegalStateException(
-                        "SpaceItemDecoration can only be used with a LinearLayoutManager.")
+                    "SpaceItemDecoration can only be used with a LinearLayoutManager."
+                )
             }
         }
         return orientation
     }
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
-                                state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect, view: View, parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         if (spacing == 0) {
             return
         }

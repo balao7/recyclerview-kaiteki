@@ -75,20 +75,36 @@ class KaitekiSwipeCallback(
                 )
             }
 
-        fun draw(c: Canvas, drawLeft: Boolean, recyclerView: RecyclerView, itemView: View, dX: Float) {
+        fun draw(
+            c: Canvas,
+            drawLeft: Boolean,
+            recyclerView: RecyclerView,
+            itemView: View,
+            dX: Float
+        ) {
             val itemWidth = itemView.right - itemView.left
             if (drawLeft) {
                 if (dX <= 0) {
                     return
                 }
-                c.withClip(recyclerView.left, itemView.top, itemView.right - itemWidth / 2 + dX.toInt(), itemView.bottom) {
+                c.withClip(
+                    recyclerView.left,
+                    itemView.top,
+                    itemView.right - itemWidth / 2 + dX.toInt(),
+                    itemView.bottom
+                ) {
                     drawInternal(this, drawLeft, recyclerView, itemView, dX)
                 }
             } else {
                 if (dX >= 0) {
                     return
                 }
-                c.withClip(itemView.left + itemWidth / 2 + dX.toInt(), itemView.top, recyclerView.right, itemView.bottom) {
+                c.withClip(
+                    itemView.left + itemWidth / 2 + dX.toInt(),
+                    itemView.top,
+                    recyclerView.right,
+                    itemView.bottom
+                ) {
                     drawInternal(this, drawLeft, recyclerView, itemView, dX)
                 }
             }
@@ -145,11 +161,18 @@ class KaitekiSwipeCallback(
 
         protected val textHeight by lazy { textPaint.fontMetrics.run { descent - ascent } }
 
-        override fun drawInternal(c: Canvas, drawLeft: Boolean, recyclerView: RecyclerView, itemView: View, dX: Float) {
+        override fun drawInternal(
+            c: Canvas,
+            drawLeft: Boolean,
+            recyclerView: RecyclerView,
+            itemView: View,
+            dX: Float
+        ) {
             super.drawInternal(c, drawLeft, recyclerView, itemView, dX)
 
             textPaint.textAlign = if (drawLeft) Paint.Align.LEFT else Paint.Align.RIGHT
-            val tY = itemView.top + round((itemView.height - textHeight) / 2f - textPaint.fontMetrics.ascent)
+            val tY =
+                itemView.top + round((itemView.height - textHeight) / 2f - textPaint.fontMetrics.ascent)
             if (drawLeft) {
                 c.drawText(text, itemView.left.toFloat(), tY, textPaint)
             } else {

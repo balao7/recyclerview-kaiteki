@@ -47,6 +47,10 @@ class AutofitLayoutManager(
 
     companion object {
         val MIN_WIDTH =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48f, Resources.getSystem().displayMetrics).toInt()
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                48f,
+                Resources.getSystem().displayMetrics
+            ).toInt()
     }
 }

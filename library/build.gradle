@@ -4,14 +4,17 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 29
     compileOptions {
-        kotlinOptions.freeCompilerArgs += ['-module-name', "recyclerview.kaiteki"]
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ['-module-name', "recyclerview.kaiteki"]
     }
     defaultConfig {
         minSdkVersion 17
         versionCode 1
-        versionName "1.0.8"
+        versionName "1.0.9"
     }
     buildTypes {
         release {
@@ -27,5 +30,5 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
 }

@@ -40,7 +40,12 @@ class StickyHeaderDecoration<VH : RecyclerView.ViewHolder>(
         val childInContact = getChildInContact(parent, contactPoint, headerPos)
 
         headerRef?.let { ViewCompat.setClipBounds(it, null) }
-        if (childInContact != null && headerProvider.isHeader(parent.getChildAdapterPosition(childInContact))) {
+        if (childInContact != null && headerProvider.isHeader(
+                parent.getChildAdapterPosition(
+                    childInContact
+                )
+            )
+        ) {
             drawHeaderTranslated(c, currentHeader, childInContact)
             return
         }
@@ -71,7 +76,11 @@ class StickyHeaderDecoration<VH : RecyclerView.ViewHolder>(
         }
     }
 
-    private fun getChildInContact(parent: RecyclerView, contactPoint: Int, currentHeaderPos: Int): View? {
+    private fun getChildInContact(
+        parent: RecyclerView,
+        contactPoint: Int,
+        currentHeaderPos: Int
+    ): View? {
         parent.forEachIndexed { index, child ->
             var heightTolerance = 0
 
@@ -106,11 +115,16 @@ class StickyHeaderDecoration<VH : RecyclerView.ViewHolder>(
     private fun fixLayoutSize(parent: ViewGroup, view: View) {
         // Specs for parent (RecyclerView)
         val widthSpec = View.MeasureSpec.makeMeasureSpec(parent.width, View.MeasureSpec.EXACTLY)
-        val heightSpec = View.MeasureSpec.makeMeasureSpec(parent.height, View.MeasureSpec.UNSPECIFIED)
+        val heightSpec =
+            View.MeasureSpec.makeMeasureSpec(parent.height, View.MeasureSpec.UNSPECIFIED)
 
         // Specs for children (headers)
         val childWidthSpec =
-            ViewGroup.getChildMeasureSpec(widthSpec, parent.paddingLeft + parent.paddingRight, view.layoutParams.width)
+            ViewGroup.getChildMeasureSpec(
+                widthSpec,
+                parent.paddingLeft + parent.paddingRight,
+                view.layoutParams.width
+            )
         val childHeightSpec =
             ViewGroup.getChildMeasureSpec(
                 heightSpec,
