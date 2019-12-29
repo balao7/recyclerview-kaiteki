@@ -29,22 +29,22 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'androidx.core:core-ktx:1.2.0-beta01'
+    implementation 'androidx.core:core-ktx:1.2.0-rc01'
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
 
-    implementation 'com.google.android.material:material:1.2.0-alpha01'
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
 
     implementation 'com.github.bumptech.glide:glide:4.10.0'
-    implementation 'com.github.bumptech.glide:okhttp3-integration:4.9.0'
-    implementation ('com.github.bumptech.glide:recyclerview-integration:4.9.0') {
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.10.0'
+    implementation ('com.github.bumptech.glide:recyclerview-integration:4.10.0') {
         // Excludes the support library because it's already included by Glide.
         transitive = false
     }
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
 
-    implementation 'com.kroegerama:android-kaiteki:2.8.6'
+    implementation 'com.kroegerama:android-kaiteki:2.9.0'
     implementation project(':library')
 }

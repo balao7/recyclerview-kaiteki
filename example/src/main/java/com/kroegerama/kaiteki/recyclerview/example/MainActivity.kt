@@ -43,13 +43,8 @@ class MainActivity : BaseFragmentActivity<Navigation>(
         Navigation.Main -> FragRecycler()
     }
 
-    override fun decorateTransaction(
-        fromIndex: Navigation?,
-        toIndex: Navigation,
-        fragment: Fragment,
-        transaction: FragmentTransaction
-    ) {
-        transaction.setReorderingAllowed(true)
+    override fun FragmentTransaction.decorate(fromIndex: Navigation?, toIndex: Navigation, fragment: Fragment) {
+        setReorderingAllowed(true)
     }
 
     fun gotoMain() {
