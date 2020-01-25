@@ -9,7 +9,7 @@ import com.kroegerama.kaiteki.toast
 import kotlinx.android.synthetic.main.ac_simple.*
 import kotlinx.android.synthetic.main.item_simple.view.*
 
-class AcSimple : BaseActivity( R.layout.ac_simple) {
+class AcSimple : BaseActivity(R.layout.ac_simple) {
 
     private val adapter by lazy { MySimpleAdapter() }
 
@@ -27,7 +27,7 @@ class AcSimple : BaseActivity( R.layout.ac_simple) {
             itemView.title.text = item
         }
 
-        override fun compareItems(content: Boolean, a: String, b: String) = a == b
+        override fun compareItems(checkContent: Boolean, a: String, b: String) = a == b
 
         override fun injectListeners(viewHolder: BaseViewHolder<String>, viewType: Int, currentItem: () -> String?) = with(viewHolder) {
             itemView.setOnClickListener { itemView.context.toast(currentItem() ?: "null") }
@@ -41,11 +41,11 @@ class AcSimple : BaseActivity( R.layout.ac_simple) {
             itemView.title.text = item
         }
 
-        override fun itemClick(item: String?) {
+        override fun itemClick(viewHolder: BaseViewHolder<String>, item: String?) {
             toast(item ?: "null")
         }
 
-        override fun compareItems(content: Boolean, a: String, b: String): Boolean = a == b
+        override fun compareItems(checkContent: Boolean, a: String, b: String): Boolean = a == b
 
     }
 }
