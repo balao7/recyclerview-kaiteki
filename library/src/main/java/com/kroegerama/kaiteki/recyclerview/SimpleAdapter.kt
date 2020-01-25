@@ -11,7 +11,7 @@ abstract class SimpleAdapter<T>(
 ) : BaseAdapter<T>() {
 
     abstract fun simpleUpdate(viewHolder: BaseViewHolder<T>, item: T?)
-    abstract fun itemClick(item: T?)
+    abstract fun itemClick(viewHolder: BaseViewHolder<T>, item: T?)
 
     override fun getLayoutRes(viewType: Int) = itemLayoutRes
     override fun injectListeners(
@@ -19,7 +19,7 @@ abstract class SimpleAdapter<T>(
         viewType: Int,
         currentItem: () -> T?
     ) = with(viewHolder) {
-        itemView.setOnClickListener { itemClick(currentItem()) }
+        itemView.setOnClickListener { itemClick(viewHolder, currentItem()) }
     }
 
     override fun updater(viewHolder: BaseViewHolder<T>, viewType: Int, item: T?) =
